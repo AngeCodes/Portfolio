@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tshiamo Mathumetja | Portfolio</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Alegreya+Sans:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --wine:  #3B0728;;
+      --wine-deep: #24051B;
+      --pink-vibrant: #B83A64;
+      --pink-soft: #D9658B;
+      --olive-dark: #3F4514;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --card-border: rgba(184, 58, 100, 0.22);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Alegreya Sans', sans-serif;
+      background-color: #FAF5F2;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(232, 160, 181, 0.45) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(183, 123, 198, 0.35) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(245, 237, 232, 0.9) 0px, transparent 70%),
+        radial-gradient(at 100% 100%, rgba(84, 91, 29, 0.18) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(217, 101, 139, 0.3) 0px, transparent 50%);
+      background-attachment: fixed;
+      color: var(--wine-deep);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .display-font { font-family: 'Playfair Display', serif; }
+
+    /* Clean Image Letter Layout */
+    .name-title-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-bottom: 2.2rem;
+    }
+
+    .name-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .chrome-word {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.2rem;
+    }
+
+    .chrome-char {
+      height: clamp(42px, 6vw, 75px);
+      width: auto;
+      object-fit: contain;
+      display: inline-block;
+      mix-blend-mode: multiply; 
+      filter: drop-shadow(0px 4px 6px rgba(59, 7, 40, 0.18));
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      user-select: none;
+      position: relative;
+      z-index: 2;
+    }
+
+    .chrome-char:hover {
+      transform: translateY(-5px) scale(1.1);
+    }
+
+    /* Chic Bow Accent Styling */
+    .chic-bow {
+      position: absolute;
+      bottom: -12px;
+      right: -16px;
+      width: clamp(28px, 4vw, 42px); 
+      height: auto;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      transform: rotate(18deg); 
+      z-index: 3; 
+      pointer-events: none; 
+    }
+
+    .mosaic-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.8fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 10px;
+      max-width: 720px;
+      margin: 0 auto;
+      aspect-ratio: 16/10;
+    }
+    .mosaic-grid .mosaic-main {
+      grid-column: 2;
+      grid-row: 1 / 3;
+    }
+    .mosaic-grid img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 4px 14px rgba(59, 7, 40, 0.08);
+    }
+
+    .skill-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 1.6rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 6px 20px rgba(59, 7, 40, 0.05);
+      transition: all 0.3s ease;
+    }
+    .skill-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--pink-vibrant);
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 10px 25px rgba(184, 58, 100, 0.15);
+    }
+
+    .cert-dropdown {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0, 1, 0, 1);
+    }
+    .expandable-card.active .cert-dropdown {
+      max-height: 500px;
+      transition: max-height 0.4s ease-in-out;
+    }
+    .expandable-card.active .dropdown-arrow { transform: rotate(180deg); }
+    .dropdown-arrow { transition: transform 0.3s ease; }
+
+    .nav-link { transition: color 0.3s ease; }
+    .nav-link:hover { color: var(--pink-vibrant); }
+
+    .social-link {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1.5px solid var(--card-border);
+      box-shadow: 0 4px 12px rgba(59, 7, 40, 0.06);
+      transition: all 0.3s ease;
+    }
+    .social-link:hover {
+      border-color: var(--pink-vibrant);
+      color: #FFFFFF !important;
+      background: var(--pink-vibrant);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(184, 58, 100, 0.3);
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 1.8rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 6px 20px rgba(59, 7, 40, 0.05);
+      transition: all 0.3s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--pink-vibrant);
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 10px 25px rgba(184, 58, 100, 0.15);
+    }
+  </style>
+ </head>
+ <body class="min-h-screen w-full">
+  
+  <!-- Header: Top Right Navigation -->
+  <header class="fixed top-0 w-full z-50 backdrop-blur-xl border-b border-[#3B0728]/10" style="background: rgba(250, 245, 242, 0.88);">
+   <nav class="max-w-7xl mx-auto flex justify-end items-center px-6 py-4">
+    <ul class="flex gap-5 md:gap-8 items-center">
+     <li><a href="#about" class="nav-link text-xs md:text-sm font-bold tracking-wider uppercase" style="color: var(--wine);">About</a></li>
+     <li><a href="#skills" class="nav-link text-xs md:text-sm font-bold tracking-wider uppercase" style="color: var(--wine);">Skills</a></li>
+     <li><a href="#certifications" class="nav-link text-xs md:text-sm font-bold tracking-wider uppercase" style="color: var(--wine);">Certifications</a></li>
+     <li><a href="#projects" class="nav-link text-xs md:text-sm font-bold tracking-wider uppercase" style="color: var(--wine);">Projects</a></li>
+     <li><a href="#contact" class="nav-link text-xs md:text-sm font-bold tracking-wider uppercase" style="color: var(--wine);">Contact</a></li>
+    </ul>
+   </nav>
+  </header>
+
+  <main>
+   <!-- Hero Section -->
+   <section id="about" class="pt-32 pb-14 px-6 rounded-b-[3.5rem] shadow-sm" style="background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(232,160,181,0.25));">
+    
+    <!-- INDIVIDUAL LETTER DISPLAY -->
+    <div class="name-title-container">
+      
+      <!-- FIRST NAME: TSHIAMO -->
+      <div class="name-row">
+        <div class="chrome-word">
+          <img src="Images/T.jpg" alt="T" class="chrome-char">
+          <img src="Images/S.jpg" alt="S" class="chrome-char">
+          <img src="Images/H.jpg" alt="H" class="chrome-char">
+          <img src="Images/I.jpg" alt="I" class="chrome-char">
+          <img src="Images/A.jpg" alt="A" class="chrome-char">
+          <img src="Images/M.jpg" alt="M" class="chrome-char">
+          <img src="Images/O.jpg" alt="O" class="chrome-char">
+        </div>
+      </div>
+
+      <!-- SURNAME: MATHUMETJA -->
+      <div class="name-row">
+        <div class="chrome-word">
+          <img src="Images/M.jpg" alt="M" class="chrome-char">
+          <img src="Images/A.jpg" alt="A" class="chrome-char">
+          <img src="Images/T.jpg" alt="T" class="chrome-char">
+          <img src="Images/H.jpg" alt="H" class="chrome-char">
+          <img src="Images/U.jpg" alt="U" class="chrome-char">
+          <img src="Images/M.jpg" alt="M" class="chrome-char">
+          <img src="Images/E.jpg" alt="E" class="chrome-char">
+          <img src="Images/T.jpg" alt="T" class="chrome-char">
+          <img src="Images/J.jpg" alt="J" class="chrome-char">
+          
+          <!-- Final 'A' with Chic Bow Accent -->
+          <div class="relative inline-flex items-center justify-center">
+            <img src="Images/A.jpg" alt="A" class="chrome-char">
+            <img src="Images/bow.jpg" alt="Bow Accent" class="chic-bow" onerror="this.style.display='none'">
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Mosaic Grid with Profile -->
+    <div class="mosaic-grid mb-8">
+     <img src="Images/Rhodolite Data Dashboard.jpg" loading="lazy" alt="Grid Image 1" onerror="this.src='https://via.placeholder.com/200/F5EDE8/3B0728?text=1'">
+     <img src="Images\Algorithm.jpg" loading="lazy" alt="Grid Image 2" onerror="this.src='https://via.placeholder.com/200/F5EDE8/3B0728?text=2'">
+     <div class="mosaic-main overflow-hidden rounded-xl shadow-xl border-4 border-white">
+      <img src="Images/profile.jpeg" class="w-full h-full object-cover" loading="lazy" alt="Tshiamo Profile" onerror="this.src='https://via.placeholder.com/300/F5EDE8/3B0728?text=Profile'">
+     </div>
+     <img src="Images\coderGirl.jpg" loading="lazy" alt="Grid Image 3" onerror="this.src='https://via.placeholder.com/200/F5EDE8/3B0728?text=3'">
+     <img src="Images\bubblegum.jpg" loading="lazy" alt="Grid Image 4" onerror="this.src='https://via.placeholder.com/200/F5EDE8/3B0728?text=4'">
+    </div>
+
+    <!-- Subtitle & Role Details -->
+    <div class="text-center mb-6">
+    
+
+    <!-- About Me Bio -->
+    <div class="max-w-3xl mx-auto text-center">
+     <h3 class="display-font text-xl md:text-2xl font-bold mb-4" style="color: var(--pink-vibrant);">An aspiring Data Analyst &amp; UI/UX Designer</h3>
+     <p class="text-base md:text-lg leading-relaxed mb-6 font-medium" style="color: #2D0920;">
+         I am a second-year BSc in IT student studying at Richfield Gradate institute of Technology and for me, technology is a platform for innovation and impact. I thrive on solving complex problems with smart, modern solutions, driven by continuous learning and hands-on development to build technologies that improve how people live, work, and connect.
+     </p>
+     <a href="#contact" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-white transition-all hover:scale-105 shadow-md" style="background: linear-gradient(135deg, var(--wine), var(--pink-vibrant));">
+       <i class="fa-solid fa-paper-plane"></i> <span>Get In Touch</span>
+     </a>
+    </div>
+   </section>
+
+   <!-- Skills Section -->
+   <section id="skills" class="py-16 px-6 max-w-6xl mx-auto rounded-[2.5rem] my-10 shadow-sm" style="background: rgba(84, 91, 29, 0.12); border: 1px solid rgba(84, 91, 29, 0.2);">
+    <h2 class="display-font text-2xl md:text-3xl font-extrabold text-center mb-2" style="color: var(--wine);">Technical Skills</h2>
+    <p class="text-center mb-10 text-sm md:text-base font-semibold" style="color: var(--olive-dark);">Foundational and applied competencies acquired across degree modules</p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+     <div class="skill-card">
+      <div class="flex items-center gap-3 mb-3">
+       <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: rgba(184, 58, 100, 0.12);">
+        <i class="fa-solid fa-code text-xl" style="color: var(--pink-vibrant);"></i>
+       </div>
+       <h4 class="font-extrabold text-lg" style="color: var(--wine);">Software Development</h4>
+      </div>
+      <p class="text-sm font-medium" style="color: #4A1B38;">Object-oriented programming, algorithm design, syntax structuring, and application logic building.</p>
+     </div>
+
+     <div class="skill-card">
+      <div class="flex items-center gap-3 mb-3">
+       <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: rgba(184, 58, 100, 0.12);">
+        <i class="fa-solid fa-globe text-xl" style="color: var(--pink-vibrant);"></i>
+       </div>
+       <h4 class="font-extrabold text-lg" style="color: var(--wine);">Web Technologies</h4>
+      </div>
+      <p class="text-sm font-medium" style="color: #4A1B38;">Responsive web design using HTML5, CSS3, JavaScript, and modern front-end concepts.</p>
+     </div>
+
+     <div class="skill-card">
+      <div class="flex items-center gap-3 mb-3">
+       <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: rgba(184, 58, 100, 0.12);">
+        <i class="fa-solid fa-database text-xl" style="color: var(--pink-vibrant);"></i>
+       </div>
+       <h4 class="font-extrabold text-lg" style="color: var(--wine);">Database Systems</h4>
+      </div>
+      <p class="text-sm font-medium" style="color: #4A1B38;">Relational database management (RDBMS), SQL query optimization, and schema design.</p>
+     </div>
+
+     <div class="skill-card">
+      <div class="flex items-center gap-3 mb-3">
+       <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: rgba(184, 58, 100, 0.12);">
+        <i class="fa-solid fa-network-wired text-xl" style="color: var(--pink-vibrant);"></i>
+       </div>
+       <h4 class="font-extrabold text-lg" style="color: var(--wine);">Networking &amp; Cloud</h4>
+      </div>
+      <p class="text-sm font-medium" style="color: #4A1B38;">TCP/IP addressing, network topology architecture, security protocols, and cloud basics.</p>
+     </div>
+
+     <div class="skill-card">
+      <div class="flex items-center gap-3 mb-3">
+       <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: rgba(184, 58, 100, 0.12);">
+        <i class="fa-solid fa-brain text-xl" style="color: var(--pink-vibrant);"></i>
+       </div>
+       <h4 class="font-extrabold text-lg" style="color: var(--wine);">Data Science &amp; ML</h4>
+      </div>
+      <p class="text-sm font-medium" style="color: #4A1B38;">Data visualization, statistical computation, predictive modeling basics, and Big Data concepts.</p>
+     </div>
+    </div>
+   </section>
+
+   <!-- Certifications Section -->
+   <section id="certifications" class="py-16 px-6 max-w-6xl mx-auto rounded-[2.5rem] my-10 shadow-sm" style="background: rgba(68, 9, 46, 0.1); border: 1px solid rgba(68, 9, 46, 0.18);">
+    <h2 class="display-font text-2xl md:text-3xl font-extrabold text-center mb-2" style="color: var(--wine);">Industry Badges &amp; Certifications</h2>
+    <p class="text-center mb-10 text-sm md:text-base font-semibold" style="color: var(--pink-vibrant);">Accredited specializations and verified digital credentials</p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+     <div class="expandable-card skill-card p-0 overflow-hidden" style="padding: 0;">
+      <div class="flex items-center justify-between p-5 cursor-pointer" onclick="toggleDropdown(this)">
+       <div class="flex items-center gap-4">
+        <img src="https://images.credly.com/size/680x680/images/ea3eec65-ddad-4242-9c59-1defac0fa2d9/image.png" alt="Google AI Badge" class="w-12 h-12 object-contain drop-shadow-sm">
+        <div>
+         <h4 class="font-extrabold text-base md:text-lg" style="color: var(--wine);">Google AI Essentials</h4>
+         <p class="text-xs font-bold uppercase tracking-wider" style="color: var(--pink-vibrant);">Google &bull; Coursera Specialization</p>
+        </div>
+       </div>
+       <div class="flex items-center gap-3">
+        <a href="https://www.credly.com/badges/4930d2d6-d329-4526-bc21-783ee1db6bd9/public_url" target="_blank" rel="noopener noreferrer" class="text-xs px-2.5 py-1.5 rounded-md font-bold transition-all hover:bg-[#B83A64] hover:text-white" style="color: var(--pink-vibrant); background: rgba(184,58,100,0.12); border: 1px solid rgba(184,58,100,0.25);" onclick="event.stopPropagation();">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a> 
+        <i class="fa-solid fa-chevron-down dropdown-arrow" style="color: var(--wine);"></i>
+       </div>
+      </div>
+
+      <div class="cert-dropdown border-t border-[#3B0728]/10">
+       <div class="p-5 space-y-2.5" style="background: rgba(255, 255, 255, 0.7);">
+        <p class="text-xs font-extrabold uppercase tracking-wider mb-3" style="color: var(--olive-dark);">Course Certificates</p>
+        
+        <a href="https://coursera.org/verify/UC2G6A113KDE" target="_blank" rel="noopener noreferrer" class="flex justify-between items-center p-3 rounded-xl border border-[#3B0728]/10 text-sm font-semibold transition-all hover:border-[#B83A64] hover:bg-white" style="color: var(--wine-deep); background: rgba(255,255,255,0.6);">
+          <span>Introduction to AI</span>
+          <span class="text-xs font-bold" style="color: var(--pink-vibrant);">Verify &rarr;</span>
+        </a> 
+
+        <a href="https://coursera.org/verify/ZLABC33HVH6G" target="_blank" rel="noopener noreferrer" class="flex justify-between items-center p-3 rounded-xl border border-[#3B0728]/10 text-sm font-semibold transition-all hover:border-[#B83A64] hover:bg-white" style="color: var(--wine-deep); background: rgba(255,255,255,0.6);">
+          <span>Maximize Productivity with AI</span>
+          <span class="text-xs font-bold" style="color: var(--pink-vibrant);">Verify &rarr;</span>
+        </a> 
+
+        <a href="https://coursera.org/verify/O6O2UNG2YVER" target="_blank" rel="noopener noreferrer" class="flex justify-between items-center p-3 rounded-xl border border-[#3B0728]/10 text-sm font-semibold transition-all hover:border-[#B83A64] hover:bg-white" style="color: var(--wine-deep); background: rgba(255,255,255,0.6);">
+          <span>Discover the Art of Prompting</span>
+          <span class="text-xs font-bold" style="color: var(--pink-vibrant);">Verify &rarr;</span>
+        </a> 
+
+        <a href="https://coursera.org/verify/ZLILTJM7SSXP" target="_blank" rel="noopener noreferrer" class="flex justify-between items-center p-3 rounded-xl border border-[#3B0728]/10 text-sm font-semibold transition-all hover:border-[#B83A64] hover:bg-white" style="color: var(--wine-deep); background: rgba(255,255,255,0.6);">
+          <span>Stay Ahead of the AI Curve</span>
+          <span class="text-xs font-bold" style="color: var(--pink-vibrant);">Verify &rarr;</span>
+        </a>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+
+   <!-- Projects Section -->
+   <section id="projects" class="py-16 px-6 max-w-6xl mx-auto rounded-[2.5rem] my-10 shadow-sm" style="background: rgba(184, 58, 100, 0.08); border: 1px solid rgba(184, 58, 100, 0.18);">
+    <h2 class="display-font text-2xl md:text-3xl font-extrabold text-center mb-2" style="color: var(--wine);">Practical Projects</h2>
+    <p class="text-center mb-10 text-sm md:text-base font-semibold" style="color: var(--olive-dark);">Featured software systems and automation products</p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+     <div class="project-card">
+      <h3 class="font-extrabold text-xl mb-2" style="color: var(--wine);">Workly AI</h3>
+      <p class="text-sm md:text-base mb-4 font-medium" style="color: #4A1B38;">
+        A dashboard of an AI workplace assistant that automates daily tasks like summarizing meeting transcripts, optimizing routine schedules, and synthesizing research into a streamlined workspace.
+      </p>
+      <div class="flex gap-2 mb-4 flex-wrap">
+       <span class="text-xs font-bold px-3 py-1 rounded-full border" style="background: rgba(84,91,29,0.12); color: var(--olive-dark); border-color: rgba(84,91,29,0.25);">CSS</span>
+       <span class="text-xs font-bold px-3 py-1 rounded-full border" style="background: rgba(84,91,29,0.12); color: var(--olive-dark); border-color: rgba(84,91,29,0.25);">JavaScript</span>
+       <span class="text-xs font-bold px-3 py-1 rounded-full border" style="background: rgba(84,91,29,0.12); color: var(--olive-dark); border-color: rgba(84,91,29,0.25);">TypeScript</span>
+      </div>
+      <a href="https://github.com/AngeCodes/ai-work-assist" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm font-extrabold transition-colors hover:opacity-80" style="color: var(--pink-vibrant);">
+        <i class="fa-brands fa-github text-base"></i> View Code
+      </a>
+     </div>
+    </div>
+   </section>
+  </main>
+
+  <!-- Footer Section -->
+  <footer id="contact" class="py-14 px-6 text-center border-t border-[#3B0728]/10" style="background: linear-gradient(135deg, rgba(124, 95, 131, 0.96), rgb(222, 182, 215));">
+   <h2 class="display-font text-2xl md:text-3xl font-extrabold mb-2 text-white">Let's Connect</h2>
+   <p class="text-sm md:text-base mb-6 font-medium" style="color: #F5EDE8;">Open for internship and junior developer opportunities.</p>
+   
+   <div class="flex justify-center gap-4 mb-6">
+    <a href="https://github.com/AngeCodes" target="_blank" rel="noopener noreferrer" class="social-link" style="color: var(--wine);" title="GitHub">
+      <i class="fa-brands fa-github text-xl"></i>
+    </a>
+    <a href="mailto:angela.math@icloud.com" class="social-link" style="color: var(--wine);" title="Email">
+      <i class="fa-solid fa-envelope text-lg"></i>
+    </a>
+   </div>
+
+   <p class="text-xs font-medium" style="color: rgba(245, 237, 232, 0.8);">&copy; <span id="year"></span> Tshiamo Mathumetja.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function toggleDropdown(headerElement) {
+      const card = headerElement.closest('.expandable-card');
+      card.classList.toggle('active');
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Automatic Path Fallback Handler (Attempts alternate extensions/locations if image is not found)
+    document.querySelectorAll('.chrome-char, .chic-bow').forEach(img => {
+      const isBow = img.classList.contains('chic-bow');
+      const char = isBow ? 'bow' : img.getAttribute('data-char');
+      
+      const alternatePaths = [
+        `Images/${char}.jpg`,
+        `Images/${char}.jpeg`,
+        `Images/${char}.png`,
+        `images/${char}.jpg`,
+        `images/${char.toLowerCase()}.jpg`,
+        `Images/letters/${char}.jpg`
+      ];
+
+      let attemptIndex = 0;
+      img.onerror = function() {
+        if (attemptIndex < alternatePaths.length) {
+          this.src = alternatePaths[attemptIndex];
+          attemptIndex++;
+        }
+      };
+    });
+  </script>
+ </body>
+</html>
